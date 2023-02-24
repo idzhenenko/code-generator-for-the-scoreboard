@@ -1,6 +1,6 @@
 package geek.prtns.geek_prtns.controller;
 
-import geek.prtns.geek_prtns.entity.CodeEntity;
+import geek.prtns.geek_prtns.model.dto.CodeDTO;
 import geek.prtns.geek_prtns.service.CodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ public class CodeGenerateController {
     private final CodeService codeService;
 
     @PostMapping("/generation")
-    public ResponseEntity<CodeEntity> createScoreboardCode() {
+    public ResponseEntity<CodeDTO> createScoreboardCode() {
         return new ResponseEntity<>(codeService.generateNextCode(), HttpStatus.OK);
     }
 }

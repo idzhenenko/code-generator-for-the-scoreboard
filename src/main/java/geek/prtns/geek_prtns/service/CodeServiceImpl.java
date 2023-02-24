@@ -2,6 +2,7 @@ package geek.prtns.geek_prtns.service;
 
 import geek.prtns.geek_prtns.entity.CodeEntity;
 import geek.prtns.geek_prtns.exeption.CustomException;
+import geek.prtns.geek_prtns.model.dto.CodeDTO;
 import geek.prtns.geek_prtns.repository.CodeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,20 +17,22 @@ public class CodeServiceImpl implements CodeService {
     private final CodeRepository codeRepository;
 
     @Override
-    public CodeEntity generateNextCode() {
-        CodeEntity lastCode = getLastCode();
-        String code = getCode(lastCode);
-        CodeEntity newCode = new CodeEntity();
-        newCode.setCreateAt(LocalDateTime.now());
-        newCode.setCode(code);
-        codeRepository.save(newCode);
-        return newCode;
+    public CodeDTO generateNextCode() {
+        CodeDTO lastCode = getLastCode();
+        CodeEntity codeEntity = new CodeEntity();
+        codeEntity.setCode(lastCode.getCode());
+        String code = getCode(codeEntity);
+        codeEntity.setCreateAt(LocalDateTime.now());
+        codeEntity.setCode(code);
+        codeRepository.save(codeEntity);
+        return new CodeDTO(codeEntity.getId(), codeEntity.getCode(), codeEntity.getCreateAt());
     }
 
     @Override
-    public CodeEntity getLastCode() {
-        return codeRepository.findFirstByOrderByCreateAtDesc().orElseThrow(() ->
+    public CodeDTO getLastCode() {
+        CodeEntity code = codeRepository.findFirstByOrderByCreateAtDesc().orElseThrow(() ->
                 new CustomException("The last code not found", HttpStatus.NOT_FOUND));
+        return new CodeDTO(code.getId(), code.getCode(), code.getCreateAt());
     }
 
     public String getCode(CodeEntity codeEntity) {
