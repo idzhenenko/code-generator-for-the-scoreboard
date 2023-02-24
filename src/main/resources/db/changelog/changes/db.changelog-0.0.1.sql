@@ -8,4 +8,4 @@ CREATE TABLE IF NOT EXISTS public.scoreboard
 );
 ALTER SEQUENCE scoreboard_seq OWNED BY scoreboard.id;
 INSERT INTO scoreboard(id, code, created_at)
-VALUES (nextval('scoreboard_seq'), 'a0a0', '2023-02-01 10:00:01.44');
+VALUES (nextval('scoreboard_seq'), 'a0a0', now());

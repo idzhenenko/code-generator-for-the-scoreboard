@@ -1,10 +1,10 @@
 package geek.prtns.geek_prtns.service;
 
-import geek.prtns.geek_prtns.entity.CodeEntity;
+import geek.prtns.geek_prtns.model.dto.CodeDTO;
 
 public interface CodeService {
 
-    CodeEntity generateNextCode();
+    CodeDTO generateNextCode();
 
-    CodeEntity getLastCode();
+    CodeDTO getLastCode();
 }
